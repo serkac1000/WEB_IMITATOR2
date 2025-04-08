@@ -28,20 +28,21 @@ body {
 
 .settings-form {
     background: white;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    height: calc(100vh - 80px);
-    overflow: hidden;
+    gap: 10px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 .form-group {
     text-align: left;
-    padding: 2px;
-    margin-bottom: 0;
+    padding: 5px;
+    margin-bottom: 5px;
+    min-height: 120px;
 }
 
 .form-group.url-input {

@@ -11,36 +11,19 @@ PORT = 81
 httpd = None
 
 def free_port(port):
-    for attempt in range(3):
-        try:
-            result = subprocess.check_output(
-                f"netstat -aon | findstr :{port}", shell=True, text=True
-            )
-            lines = result.strip().split("\n")
-            for line in lines:
-                if line and "LISTENING" in line:
-                    pid = line.split()[-1]
-                    print(f"Port {port} is in use by PID {pid}. Terminating it...")
-                    subprocess.run(f"taskkill /PID {pid} /F", shell=True, check=True)
-                    print(f"Process {pid} terminated.")
-                    time.sleep(3)  # Increased delay to ensure port is released
-                    return
-        except subprocess.CalledProcessError:
-            print(f"No process found using port {port} on attempt {attempt + 1}")
-            # Check if port is still in use (e.g., TIME_WAIT)
-            time.sleep(1)
-            continue
-        except Exception as e:
-            print(f"Error checking port {port}: {e}")
-            time.sleep(1)
-    # Final check before giving up
     try:
         with socketserver.TCPServer(("", port), None) as temp_server:
             print(f"Port {port} is free and usable.")
-        return
+            return True
     except OSError:
-        print(f"Failed to free port {port} after 3 attempts. It may still be in use.")
-        sys.exit(1)
+        try:
+            subprocess.run(f"fuser -k {port}/tcp", shell=True, check=True)
+            time.sleep(1)
+            print(f"Killed process using port {port}")
+            return True
+        except:
+            print(f"Failed to free port {port}. It may still be in use.")
+            sys.exit(1)
 
 if getattr(sys, 'frozen', False):
     basedir = sys._MEIPASS

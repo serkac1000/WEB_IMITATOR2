@@ -48,16 +48,25 @@ else:
     basedir = os.path.dirname(__file__)
 
 web_dir = os.path.join(basedir, 'web')
-try:
-    os.chdir(web_dir)
-    print(f"Changed working directory to: {os.getcwd()}")
-except FileNotFoundError:
+if not os.path.exists(web_dir):
     print(f"Error: 'web' directory not found at {web_dir}")
     sys.exit(1)
 
-print(f"Found files in 'web' directory: {os.listdir(web_dir)}")
-
 class CustomHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=web_dir, **kwargs)
+        
+    def do_GET(self):
+        if self.path == '/':
+            self.path = '/index.html'
+        elif self.path == '/shutdown':
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Server is shutting down...")
+            threading.Thread(target=self.server.shutdown, daemon=True).start()
+            return
+        return super().do_GET()
     def do_GET(self):
         if self.path == '/shutdown':
             self.send_response(200)

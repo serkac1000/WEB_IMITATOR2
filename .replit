@@ -14,3 +14,7 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python YogaPoseRecogniserWEB62/server.py"
+
+[[ports]]
+localPort = 81
+externalPort = 80

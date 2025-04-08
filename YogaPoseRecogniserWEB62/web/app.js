@@ -135,12 +135,46 @@ async function predict() {
 }
 
 function drawPose(pose) {
-    for (let keypoint of pose.keypoints) {
+    // Define the connections between keypoints that form the skeleton
+    const connections = [
+        ['nose', 'leftEye'], ['leftEye', 'leftEar'], ['nose', 'rightEye'],
+        ['rightEye', 'rightEar'], ['nose', 'shoulders'], ['shoulders', 'leftShoulder'],
+        ['shoulders', 'rightShoulder'], ['leftShoulder', 'leftElbow'],
+        ['leftElbow', 'leftWrist'], ['rightShoulder', 'rightElbow'],
+        ['rightElbow', 'rightWrist'], ['shoulders', 'hips'], ['hips', 'leftHip'],
+        ['hips', 'rightHip'], ['leftHip', 'leftKnee'], ['leftKnee', 'leftAnkle'],
+        ['rightHip', 'rightKnee'], ['rightKnee', 'rightAnkle']
+    ];
+
+    // Create a map of keypoints for easy access
+    const keypointMap = {};
+    pose.keypoints.forEach(keypoint => {
+        keypointMap[keypoint.name] = keypoint;
+    });
+
+    // Draw the lines
+    ctx.strokeStyle = '#00ff00';
+    ctx.lineWidth = 2;
+
+    connections.forEach(([p1Name, p2Name]) => {
+        const p1 = keypointMap[p1Name];
+        const p2 = keypointMap[p2Name];
+
+        if (p1 && p2 && p1.score > 0.2 && p2.score > 0.2) {
+            ctx.beginPath();
+            ctx.moveTo(p1.position.x, p1.position.y);
+            ctx.lineTo(p2.position.x, p2.position.y);
+            ctx.stroke();
+        }
+    });
+
+    // Draw the keypoints
+    pose.keypoints.forEach(keypoint => {
         if (keypoint.score > 0.2) {
             ctx.beginPath();
-            ctx.arc(keypoint.position.x, keypoint.position.y, 5, 0, 2 * Math.PI);
-            ctx.fillStyle = 'red';
+            ctx.arc(keypoint.position.x, keypoint.position.y, 3, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ff0000';
             ctx.fill();
         }
-    }
+    });
 }

@@ -93,7 +93,7 @@ button {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: calc(100vh - 160px);
+    height: 500px;
     margin: 0 auto;
     gap: 20px;
     padding: 20px;
@@ -101,8 +101,8 @@ button {
 
 .webcam-container {
     position: relative;
-    width: 45%;
-    height: 100%;
+    width: 40%;
+    height: 400px;
 }
 
 video, canvas {
@@ -119,8 +119,8 @@ canvas {
 }
 
 .pose-compare {
-    width: 45%;
-    height: 100%;
+    width: 40%;
+    height: 400px;
     border: 2px solid white;
     background: rgba(255,255,255,0.8);
     object-fit: contain;
@@ -131,11 +131,11 @@ canvas {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px 40px;
-    font-size: 48px;
+    padding: 20px 25px;
+    font-size: 36px;
     font-weight: bold;
     color: white;
-    border-radius: 15px;
+    border-radius: 10px;
     z-index: 10;
 }
 

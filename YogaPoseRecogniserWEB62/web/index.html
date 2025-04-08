@@ -52,8 +52,11 @@
         <div id="recognition-page" class="page">
             <h1>Pose Recognition</h1>
             <div class="video-container">
-                <video id="webcam" playsinline></video>
-                <canvas id="output"></canvas>
+                <div class="webcam-container">
+                    <video id="webcam" playsinline></video>
+                    <canvas id="output"></canvas>
+                </div>
+                <div id="timer" class="timer">3s</div>
                 <img id="current-pose" class="pose-compare">
             </div>
             <div class="pose-info">

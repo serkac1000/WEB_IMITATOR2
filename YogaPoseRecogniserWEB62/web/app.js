@@ -116,7 +116,7 @@ async function predict() {
     currentPose.src = poseImages.get(expectedPose);
     currentPose.style.display = 'block';
 
-    if (maxConfidence > 0.5 && bestPose === expectedPose) {
+    if (maxConfidence > 0.7 && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
         }
@@ -135,44 +135,36 @@ async function predict() {
 }
 
 function drawPose(pose) {
-    // Define the connections between keypoints that form the skeleton
     const connections = [
-        ['nose', 'leftEye'], ['leftEye', 'leftEar'], ['nose', 'rightEye'],
-        ['rightEye', 'rightEar'], ['nose', 'shoulders'], ['shoulders', 'leftShoulder'],
-        ['shoulders', 'rightShoulder'], ['leftShoulder', 'leftElbow'],
-        ['leftElbow', 'leftWrist'], ['rightShoulder', 'rightElbow'],
-        ['rightElbow', 'rightWrist'], ['shoulders', 'hips'], ['hips', 'leftHip'],
-        ['hips', 'rightHip'], ['leftHip', 'leftKnee'], ['leftKnee', 'leftAnkle'],
-        ['rightHip', 'rightKnee'], ['rightKnee', 'rightAnkle']
+        [5, 7], [7, 9], // Left arm
+        [6, 8], [8, 10], // Right arm
+        [5, 6], // Shoulders
+        [5, 11], [6, 12], // Torso
+        [11, 13], [13, 15], // Left leg
+        [12, 14], [14, 16], // Right leg
+        [11, 12], // Hips
     ];
 
-    // Create a map of keypoints for easy access
-    const keypointMap = {};
-    pose.keypoints.forEach(keypoint => {
-        keypointMap[keypoint.name] = keypoint;
-    });
-
-    // Draw the lines
     ctx.strokeStyle = '#00ff00';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
 
-    connections.forEach(([p1Name, p2Name]) => {
-        const p1 = keypointMap[p1Name];
-        const p2 = keypointMap[p2Name];
+    connections.forEach(([p1, p2]) => {
+        const point1 = pose.keypoints[p1];
+        const point2 = pose.keypoints[p2];
 
-        if (p1 && p2 && p1.score > 0.2 && p2.score > 0.2) {
+        if (point1.score > 0.7 && point2.score > 0.7) {
             ctx.beginPath();
-            ctx.moveTo(p1.position.x, p1.position.y);
-            ctx.lineTo(p2.position.x, p2.position.y);
+            ctx.moveTo(point1.position.x, point1.position.y);
+            ctx.lineTo(point2.position.x, point2.position.y);
             ctx.stroke();
         }
     });
 
-    // Draw the keypoints
+    // Small dots at joints
     pose.keypoints.forEach(keypoint => {
-        if (keypoint.score > 0.2) {
+        if (keypoint.score > 0.7) {
             ctx.beginPath();
-            ctx.arc(keypoint.position.x, keypoint.position.y, 3, 0, 2 * Math.PI);
+            ctx.arc(keypoint.position.x, keypoint.position.y, 2, 0, 2 * Math.PI);
             ctx.fillStyle = '#ff0000';
             ctx.fill();
         }

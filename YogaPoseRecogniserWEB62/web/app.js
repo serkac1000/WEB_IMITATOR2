@@ -4,7 +4,7 @@ let currentPoseImage = null;
 let currentPoseIndex = 0;
 let poseHoldTimer = 3;
 let lastPoseTime = 0;
-const poseOrder = ['Pose1', 'Pose2', 'Pose3'];
+const poseOrder = ['Pose1', 'Pose2', 'Pose3', 'Pose4', 'Pose5', 'Pose6'];
 
 // Event Listeners
 document.getElementById('start-button').addEventListener('click', startRecognition);
@@ -12,6 +12,9 @@ document.getElementById('back-button').addEventListener('click', showSettingsPag
 document.getElementById('pose1-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose1'));
 document.getElementById('pose2-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose2'));
 document.getElementById('pose3-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose3'));
+document.getElementById('pose4-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose4'));
+document.getElementById('pose5-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose5'));
+document.getElementById('pose6-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose6'));
 
 function handleImageUpload(event, poseName) {
     const file = event.target.files[0];
@@ -29,7 +32,7 @@ function handleImageUpload(event, poseName) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    ['Pose1', 'Pose2', 'Pose3'].forEach(poseName => {
+    ['Pose1', 'Pose2', 'Pose3', 'Pose4', 'Pose5', 'Pose6'].forEach(poseName => {
         const savedImage = localStorage.getItem(`pose_${poseName}`);
         if (savedImage) {
             const preview = document.getElementById(`${poseName.toLowerCase()}-preview`);
@@ -49,8 +52,8 @@ function showSettingsPage() {
 }
 
 async function startRecognition() {
-    if (poseImages.size < 3) {
-        alert('Please upload all three pose images first');
+    if (poseImages.size < 6) {
+        alert('Please upload all six pose images first');
         return;
     }
     

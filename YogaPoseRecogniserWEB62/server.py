@@ -79,12 +79,12 @@ def open_browser():
 def start_server():
     global httpd
     try:
-        httpd = socketserver.TCPServer(("", PORT), CustomHandler)
+        httpd = socketserver.TCPServer(("0.0.0.0", PORT), CustomHandler)
         print("Welcome to the Yoga Pose Recognition Server")
         print("Your server is running successfully!")
         print(f"Serving on port {PORT} from {web_dir}")
-        print("Visit http://localhost:81/ to access the app.")
-        print("Visit http://localhost:81/shutdown to stop the server.")
+        print("Visit http://0.0.0.0:81/ to access the app.")
+        print("Visit http://0.0.0.0:81/shutdown to stop the server.")
         threading.Thread(target=open_browser, daemon=True).start()
         httpd.serve_forever()
     except KeyboardInterrupt:

@@ -57,7 +57,17 @@
                 <img id="current-pose" class="pose-compare">
             </div>
             <div class="pose-info">
-                <div id="pose-name">Current Pose: None</div>
+                <div class="pose-status">
+                    <div class="pose-label">Expected Pose:</div>
+                    <div id="expected-pose" class="pose-value">None</div>
+                    <div class="pose-label">Current Pose:</div>
+                    <div id="current-pose-text" class="pose-value">None</div>
+                    <div class="pose-label">Confidence:</div>
+                    <div class="confidence-bar-container">
+                        <div id="confidence-bar" class="confidence-bar"></div>
+                        <span id="confidence-text">0%</span>
+                    </div>
+                </div>
                 <div class="back-button-container">
                     <button id="back-button">Back to Settings</button>
                 </div>

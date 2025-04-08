@@ -123,6 +123,23 @@ async function predict() {
     currentPose.src = poseImages.get(expectedPose);
     currentPose.style.display = 'block';
 
+    const expectedPoseEl = document.getElementById('expected-pose');
+    const currentPoseEl = document.getElementById('current-pose-text');
+    const confidenceBar = document.getElementById('confidence-bar');
+    const confidenceText = document.getElementById('confidence-text');
+    
+    expectedPoseEl.textContent = expectedPose;
+    currentPoseEl.textContent = bestPose;
+    
+    // Update confidence bar
+    const confidencePercent = (maxConfidence * 100).toFixed(1);
+    confidenceBar.style.width = `${confidencePercent}%`;
+    confidenceText.textContent = `${confidencePercent}%`;
+    
+    // Update color coding
+    expectedPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
+    currentPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
+    
     if (maxConfidence > 0.7 && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
@@ -133,11 +150,8 @@ async function predict() {
             currentPoseIndex = (currentPoseIndex + 1) % poseOrder.length;
             lastPoseTime = 0;
         }
-        
-        labelContainer.textContent = `Current Pose: ${bestPose}\nConfidence: ${(maxConfidence * 100).toFixed(2)}%\nHold for: ${Math.max(0, holdTime)}s`;
     } else {
         lastPoseTime = 0;
-        labelContainer.textContent = `Expected Pose: ${expectedPose}\nCurrent Pose: ${bestPose}\nConfidence: ${(maxConfidence * 100).toFixed(2)}%`;
     }
 }
 

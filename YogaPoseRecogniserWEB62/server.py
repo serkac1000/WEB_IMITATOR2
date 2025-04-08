@@ -7,7 +7,7 @@ import threading
 import subprocess
 import time
 
-PORT = 81
+PORT = 5000
 httpd = None
 
 def free_port(port):

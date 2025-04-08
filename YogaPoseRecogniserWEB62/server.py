@@ -7,7 +7,7 @@ import threading
 import subprocess
 import time
 
-PORT = 5000
+PORT = 81
 httpd = None
 
 def free_port(port):
@@ -83,8 +83,8 @@ def start_server():
         print("Welcome to the Yoga Pose Recognition Server")
         print("Your server is running successfully!")
         print(f"Serving on port {PORT} from {web_dir}")
-        print("Visit http://0.0.0.0:5000/ to access the app.")
-        print("Visit http://0.0.0.0:5000/shutdown to stop the server.")
+        print("Visit http://0.0.0.0:81/ to access the app.")
+        print("Visit http://0.0.0.0:81/shutdown to stop the server.")
         threading.Thread(target=open_browser, daemon=True).start()
         httpd.serve_forever()
     except KeyboardInterrupt:

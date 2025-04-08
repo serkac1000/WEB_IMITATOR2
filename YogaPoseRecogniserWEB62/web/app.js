@@ -143,14 +143,24 @@ async function predict() {
     if (maxConfidence > 0.7 && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
+            console.log('Started holding pose:', expectedPose);
         }
         const holdTime = 3 - Math.floor((Date.now() - lastPoseTime) / 1000);
-
+        
         if (holdTime <= 0) {
+            console.log('Switching from', expectedPose, 'to next pose');
             currentPoseIndex = (currentPoseIndex + 1) % poseOrder.length;
             lastPoseTime = 0;
+            
+            // Update display immediately
+            const nextPose = poseOrder[currentPoseIndex];
+            expectedPoseEl.textContent = nextPose;
+            currentPose.src = poseImages.get(nextPose);
         }
     } else {
+        if (lastPoseTime !== 0) {
+            console.log('Reset hold timer - pose lost or incorrect');
+        }
         lastPoseTime = 0;
     }
 }

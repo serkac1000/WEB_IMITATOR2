@@ -10,6 +10,9 @@ const poseOrder = ['Pose1', 'Pose2', 'Pose3', 'Pose4', 'Pose5', 'Pose6'];
 document.getElementById('start-button').addEventListener('click', startRecognition);
 document.getElementById('back-button').addEventListener('click', showSettingsPage);
 document.getElementById('save-button').addEventListener('click', saveSettings);
+document.getElementById('threshold-input').addEventListener('input', function() {
+    document.getElementById('threshold-value').textContent = this.value;
+});
 
 function saveSettings() {
     const modelUrl = document.getElementById('model-url').value;
@@ -141,7 +144,8 @@ async function predict() {
     currentPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
 
     const timerEl = document.getElementById('timer');
-    if (maxConfidence > 0.7 && bestPose === expectedPose) {
+    const threshold = parseFloat(document.getElementById('threshold-input').value);
+    if (maxConfidence > threshold && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
             console.log('Started holding pose:', expectedPose);

@@ -57,11 +57,18 @@ body {
     white-space: nowrap;
 }
 
-.form-group input[type="text"] {
+.form-group input[type="text"],
+.form-group input[type="range"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+
+#threshold-value {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
 }
 
 .pose-preview {

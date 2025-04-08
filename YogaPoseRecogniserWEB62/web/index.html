@@ -13,6 +13,11 @@
                     <label>Teachable Machine Model URL:</label>
                     <input type="text" id="model-url" value="https://teachablemachine.withgoogle.com/models/gIF64n3nR/">
                 </div>
+                <div class="form-group url-input">
+                    <label>Pose Detection Threshold (0.1 - 1.0):</label>
+                    <input type="range" id="threshold-input" min="0.1" max="1.0" step="0.1" value="0.7">
+                    <span id="threshold-value">0.7</span>
+                </div>
                 <div class="form-group">
                     <label>Pose 1 Image:</label>
                     <input type="file" id="pose1-image" accept="image/*">

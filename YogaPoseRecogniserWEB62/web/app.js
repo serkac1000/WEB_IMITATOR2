@@ -140,12 +140,17 @@ async function predict() {
     expectedPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
     currentPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
 
+    const timerEl = document.getElementById('timer');
     if (maxConfidence > 0.7 && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
             console.log('Started holding pose:', expectedPose);
         }
         const holdTime = 3 - Math.floor((Date.now() - lastPoseTime) / 1000);
+        
+        timerEl.textContent = holdTime + 's';
+        timerEl.style.backgroundColor = '#4CAF50'; // Green background
+        timerEl.style.display = 'block';
         
         if (holdTime <= 0) {
             console.log('Switching from', expectedPose, 'to next pose');
@@ -156,12 +161,16 @@ async function predict() {
             const nextPose = poseOrder[currentPoseIndex];
             expectedPoseEl.textContent = nextPose;
             currentPose.src = poseImages.get(nextPose);
+            timerEl.style.display = 'none';
         }
     } else {
         if (lastPoseTime !== 0) {
             console.log('Reset hold timer - pose lost or incorrect');
         }
         lastPoseTime = 0;
+        timerEl.textContent = '3s';
+        timerEl.style.backgroundColor = '#f44336'; // Red background
+        timerEl.style.display = 'block';
     }
 }
 

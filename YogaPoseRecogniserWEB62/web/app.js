@@ -9,13 +9,6 @@ const poseOrder = ['Pose1', 'Pose2', 'Pose3', 'Pose4', 'Pose5', 'Pose6'];
 // Event Listeners
 document.getElementById('start-button').addEventListener('click', startRecognition);
 document.getElementById('back-button').addEventListener('click', showSettingsPage);
-document.getElementById('save-button').addEventListener('click', saveSettings);
-
-function saveSettings() {
-    const modelUrl = document.getElementById('model-url').value;
-    localStorage.setItem('model_url', modelUrl);
-    alert('Settings saved successfully!');
-}
 document.getElementById('pose1-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose1'));
 document.getElementById('pose2-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose2'));
 document.getElementById('pose3-image').addEventListener('change', (e) => handleImageUpload(e, 'Pose3'));

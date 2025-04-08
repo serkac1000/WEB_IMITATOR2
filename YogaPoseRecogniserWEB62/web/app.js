@@ -63,10 +63,10 @@ async function startRecognition() {
         alert('Please upload all six pose images first');
         return;
     }
-    
+
     document.getElementById('settings-page').classList.remove('active');
     document.getElementById('recognition-page').classList.add('active');
-    
+
     const URL = document.getElementById('model-url').value;
     await init(URL);
 }
@@ -127,25 +127,25 @@ async function predict() {
     const currentPoseEl = document.getElementById('current-pose-text');
     const confidenceBar = document.getElementById('confidence-bar');
     const confidenceText = document.getElementById('confidence-text');
-    
+
     expectedPoseEl.textContent = expectedPose;
     currentPoseEl.textContent = bestPose;
-    
+
     // Update confidence bar
     const confidencePercent = (maxConfidence * 100).toFixed(1);
     confidenceBar.style.width = `${confidencePercent}%`;
     confidenceText.textContent = `${confidencePercent}%`;
-    
+
     // Update color coding
     expectedPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
     currentPoseEl.className = 'pose-value ' + (bestPose === expectedPose ? 'correct' : 'incorrect');
-    
+
     if (maxConfidence > 0.7 && bestPose === expectedPose) {
         if (lastPoseTime === 0) {
             lastPoseTime = Date.now();
         }
         const holdTime = 3 - Math.floor((Date.now() - lastPoseTime) / 1000);
-        
+
         if (holdTime <= 0) {
             currentPoseIndex = (currentPoseIndex + 1) % poseOrder.length;
             lastPoseTime = 0;

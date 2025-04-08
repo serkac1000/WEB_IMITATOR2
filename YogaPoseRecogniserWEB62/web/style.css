@@ -29,19 +29,29 @@ body {
 
 .settings-form {
     background: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    height: calc(100vh - 140px);
+    overflow: hidden;
 }
 
 .form-group {
-    margin: 15px 0;
     text-align: left;
+}
+
+.form-group.url-input {
+    grid-column: 1 / -1;
+    margin-bottom: 10px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-size: 14px;
 }
 
 .form-group input[type="text"] {
@@ -52,10 +62,16 @@ body {
 }
 
 .pose-preview {
-    max-width: 200px;
-    max-height: 200px;
-    margin: 10px 0;
+    max-width: 150px;
+    max-height: 150px;
+    margin: 5px 0;
     display: none;
+    object-fit: contain;
+}
+
+.start-button-container {
+    grid-column: 1 / -1;
+    text-align: center;
 }
 
 .video-container {

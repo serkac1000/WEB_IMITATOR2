@@ -7,9 +7,9 @@
 <body>
     <div class="container">
         <div id="settings-page" class="page active">
-            <h1>Yoga Pose Settings</h1>
+            <h1>Pose Settings</h1>
             <div class="settings-form">
-                <div class="form-group">
+                <div class="form-group url-input">
                     <label>Teachable Machine Model URL:</label>
                     <input type="text" id="model-url" value="https://teachablemachine.withgoogle.com/models/gIF64n3nR/">
                 </div>
@@ -43,7 +43,9 @@
                     <input type="file" id="pose6-image" accept="image/*">
                     <img id="pose6-preview" class="pose-preview">
                 </div>
-                <button id="start-button">Start Recognition</button>
+                <div class="start-button-container">
+                    <button id="start-button">Start Recognition</button>
+                </div>
             </div>
         </div>
         <div id="recognition-page" class="page">
